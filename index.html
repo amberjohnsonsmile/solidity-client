@@ -166,10 +166,15 @@
     </script>
   </head>
   <body>
-    <input type="number" name="id" id="id" placeholer="Customer Id" />
-    <input type="text" name="name" id="name" placeholer="Customer Name" />
-    <input type="date" name="dob" id="dob" placeholer="Customer Date Of Birth" />
-    <input type="number" name="social" id="social" placeholer="Customer Social Security Number" />
-    <input type="button" value="Register" onclick="register();"/>
+    <h1>Data Contract Registry</h1>
+    <label for="id">Customer Id</label>
+    <input type="number" name="id" id="id" />
+    <label for="name">Customer Name</label>
+    <input type="text" name="name" id="name" />
+    <label for="dob">Customer Date Of Birth</label>
+    <input type="date" name="dob" id="dob" />
+    <label for="social">Customer Social Security Number</label>
+    <input type="number" name="social" id="social" />
+    <input type="button" id="registration" value="Register" onclick="register();"/>
   </body>
 </html>
