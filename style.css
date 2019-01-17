@@ -19,6 +19,10 @@ input {
   margin-bottom: 10;
 }
 
-#registration {
+#registration, #getById {
   text-transform: uppercase;
+}
+
+p {
+  display: block;
 }

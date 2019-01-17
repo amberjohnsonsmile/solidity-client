@@ -165,12 +165,27 @@ function register() {
   dob = new Date(dob).getTime();
 
   var txn = customerContract.methods.createCustomer(id, name, dob, social);
-  console.log(txn);
-
   txn.send({from: web3.eth.defaultAccount})
+}
+
+function getCustomer() {
+  var id = document.getElementById('customerId').value;
+  var txn = customerContract.methods.getCustomerById(id);
+
+  txn.call().then(response => {
+    document.getElementById('customer-id').innerHTML = `ID: ${response.idRet}`
+    document.getElementById('customer-name').innerHTML = `Name: ${response.name}`
+    document.getElementById('customer-dob').innerHTML = `Date Of Birth: ${new Date(parseInt(response.dateOfBirth.substring(0,10)))}`
+    document.getElementById('customer-social').innerHTML = `Social Security Number: ${response.social}`
+  })
 }
 
 document.getElementById('registration').addEventListener('click', event => {
   event.preventDefault();
   register();
+});
+
+document.getElementById('getById').addEventListener('click', event => {
+  event.preventDefault();
+  getCustomer();
 });
