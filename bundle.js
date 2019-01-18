@@ -9,6 +9,29 @@ web3.eth.getAccounts().then(response => {
 var customerContract = new web3.eth.Contract([
   {
     "constant": false,
+    "inputs": [],
+    "name": "ACLContract",
+    "outputs": [],
+    "payable": false,
+    "type": "function",
+    "stateMutability": "nonpayable"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "user",
+        "type": "address"
+      }
+    ],
+    "name": "addUser",
+    "outputs": [],
+    "payable": false,
+    "type": "function",
+    "stateMutability": "nonpayable"
+  },
+  {
+    "constant": false,
     "inputs": [
       {
         "name": "id",
@@ -29,6 +52,43 @@ var customerContract = new web3.eth.Contract([
     ],
     "name": "createCustomer",
     "outputs": [],
+    "payable": false,
+    "type": "function",
+    "stateMutability": "nonpayable"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "i",
+        "type": "uint256"
+      }
+    ],
+    "name": "deleteIthUser",
+    "outputs": [],
+    "payable": false,
+    "type": "function",
+    "stateMutability": "nonpayable"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "candidate",
+        "type": "address"
+      },
+      {
+        "name": "method",
+        "type": "string"
+      }
+    ],
+    "name": "isUser",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "payable": false,
     "type": "function",
     "stateMutability": "nonpayable"
@@ -68,6 +128,33 @@ var customerContract = new web3.eth.Contract([
     "payable": false,
     "type": "function",
     "stateMutability": "nonpayable"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "by",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "name": "accessTime",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "name": "method",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "name": "desc",
+        "type": "string"
+      }
+    ],
+    "name": "LogAccess",
+    "type": "event"
   },
   {
     "constant": true,
@@ -152,8 +239,74 @@ var customerContract = new web3.eth.Contract([
     "payable": false,
     "type": "function",
     "stateMutability": "view"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "i",
+        "type": "uint256"
+      }
+    ],
+    "name": "getIthUser",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "type": "function",
+    "stateMutability": "view"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getUserCount",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "type": "function",
+    "stateMutability": "view"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "type": "function",
+    "stateMutability": "view"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "users",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "type": "function",
+    "stateMutability": "view"
   }
-], '0x182a7998bbb436789766b7467b98870744e81cfd');
+], '0xeef98fae25037b7790e6d407f0d28dc3347a08fa');
 
 function register() {
   var id = document.getElementById('id').value;
@@ -201,10 +354,14 @@ customerContract.getPastEvents('allEvents', response => {
 });
 
 function isAdmin() {
-  if (true) {
-    console.log('true')
-    document.getElementsByClassName('admin')[0].display = "inline-block";
-  }
+  customerContract.methods.isAdmin(web3.eth.defaultAccount)
+    .call()
+    .then(response => {
+      console.log(response)
+    })
+  // if (true) {
+  //   document.getElementsByClassName('admin')[0].display = "inline-block";
+  // }
 }
 
 isAdmin();
