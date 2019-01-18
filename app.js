@@ -194,5 +194,15 @@ document.getElementById('getById').addEventListener('click', event => {
   getCustomer();
 });
 
-var eventLogs = DataContract.allEvents().get();
-console.log(eventLogs);
+customerContract.getPastEvents('allEvents', response => {
+  console.log(response);
+  document.getElementsByClassName('logs')[0].innerHTML = response;
+});
+
+function isAdmin() {
+  if (true) {
+    document.getElementsByClassName('admin')[0].display = "inline-block";
+  }
+}
+
+isAdmin();

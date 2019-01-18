@@ -1,16 +1,31 @@
 body {
-  background: mintcream;
+  background: url("https://images.unsplash.com/photo-1462331940025-496dfbfc7564") no-repeat center center fixed;
+  background-size: cover;
   font-family: Arial;
   font-size: 20;
   padding: 20 0 0 20;
+  color: white;
+  text-align: center;
+}
+
+.main {
+  display: inline-block;
+  text-align: left;
 }
 
 h1 {
-  font-size: 24;
+  font-size: 30;
+  margin: 50 0;
+  text-align: center;
 }
 
 h2 {
   font-size: 24;
+  text-align: center;
+}
+
+#get-header {
+  padding-top: 30;
 }
 
 input {
@@ -31,4 +46,8 @@ table {
 td {
   padding-right: 20;
   vertical-align: top;
+}
+
+.admin {
+  display: hidden;
 }

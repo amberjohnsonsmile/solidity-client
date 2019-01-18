@@ -195,8 +195,19 @@ document.getElementById('getById').addEventListener('click', event => {
   getCustomer();
 });
 
-var eventLogs = DataContract.allEvents().get();
-console.log(eventLogs);
+customerContract.getPastEvents('allEvents', response => {
+  console.log(response);
+  document.getElementsByClassName('logs')[0].innerHTML = response;
+});
+
+function isAdmin() {
+  if (true) {
+    console.log('true')
+    document.getElementsByClassName('admin')[0].display = "inline-block";
+  }
+}
+
+isAdmin();
 
 },{"web3":226}],2:[function(require,module,exports){
 module.exports = require('./register')().Promise
