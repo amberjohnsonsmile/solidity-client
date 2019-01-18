@@ -174,11 +174,15 @@ function getCustomer() {
   var txn = customerContract.methods.getCustomerById(id);
 
   txn.call().then(response => {
-    document.getElementById('customer-id').innerHTML = `ID: ${response.idRet}`
-    document.getElementById('customer-name').innerHTML = `Name: ${response.name}`
-    document.getElementById('customer-dob').innerHTML = `Date Of Birth: ${new Date(parseInt(response.dateOfBirth.substring(0,10)))}`
-    document.getElementById('customer-social').innerHTML = `Social Security Number: ${response.social}`
-  })
+    document.getElementById('customer-id').innerHTML = 'ID: '
+    document.getElementById('customer-id-val').innerHTML = response.idRet
+    document.getElementById('customer-name').innerHTML = 'Name: '
+    document.getElementById('customer-name-val').innerHTML = response.name
+    document.getElementById('customer-dob').innerHTML = 'DOB: '
+    document.getElementById('customer-dob-val').innerHTML = new Date(parseInt(response.dateOfBirth.substring(0,10)))
+    document.getElementById('customer-social').innerHTML = 'SSN: '
+    document.getElementById('customer-social-val').innerHTML = response.social
+  });
 }
 
 document.getElementById('registration').addEventListener('click', event => {
@@ -190,6 +194,9 @@ document.getElementById('getById').addEventListener('click', event => {
   event.preventDefault();
   getCustomer();
 });
+
+var eventLogs = DataContract.allEvents().get();
+console.log(eventLogs);
 
 },{"web3":226}],2:[function(require,module,exports){
 module.exports = require('./register')().Promise

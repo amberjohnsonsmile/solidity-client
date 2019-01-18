@@ -2,6 +2,7 @@ body {
   background: mintcream;
   font-family: Arial;
   font-size: 20;
+  padding: 20 0 0 20;
 }
 
 h1 {
@@ -15,7 +16,7 @@ h2 {
 input {
   display: block;
   height: 24;
-  width: 500;
+  width: 400;
   margin-bottom: 10;
 }
 
@@ -23,6 +24,11 @@ input {
   text-transform: uppercase;
 }
 
-p {
-  display: block;
+table {
+  width: 400;
+}
+
+td {
+  padding-right: 20;
+  vertical-align: top;
 }

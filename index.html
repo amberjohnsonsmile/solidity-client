@@ -4,23 +4,46 @@
   </head>
   <body>
     <h1>Data Contract Registry</h1>
-    <label for="id">Customer Id</label>
-    <input type="number" name="id" id="id" />
-    <label for="name">Customer Name</label>
-    <input type="text" name="name" id="name" />
-    <label for="dob">Customer Date Of Birth</label>
-    <input type="date" name="dob" id="dob" />
-    <label for="social">Customer Social Security Number</label>
-    <input type="number" name="social" id="social" />
-    <input type="button" id="registration" value="Register" />
+    <form>
+      <label>Customer ID
+        <input type="number" name="id" id="id" />
+      </label>
+      <label>Customer Name
+        <input type="text" name="name" id="name" />
+      </label>
+      <label>Customer Date Of Birth
+        <input type="date" name="dob" id="dob" />
+      </label>
+      <label>Customer Social Security Number
+        <input type="number" name="social" id="social" />
+      </label>
+      <input type="button" id="registration" value="Register" />
+    </form>
     <h2>Get Customer By ID</h2>
-    <label for="customerId">Customer Id</label>
-    <input type="number" id="customerId">
-    <input type="button" id="getById" value="Get Customer" />
-    <p id="customer-id"></p>
-    <p id="customer-name"></p>
-    <p id="customer-dob"></p>
-    <p id="customer-social"></p>
+    <form>
+      <label>Customer Id
+        <input type="number" id="customerId">
+      </label>
+      <input type="button" id="getById" value="Get Customer" />
+    </form>
+    <table>
+      <tr>
+        <td id="customer-id"></td>
+        <td id="customer-id-val"></td>
+      </tr>
+      <tr>
+        <td id="customer-name"></td>
+        <td id="customer-name-val"></td>
+      </tr>
+      <tr>
+        <td id="customer-dob"></td>
+        <td id="customer-dob-val"></td>
+      </tr>
+      <tr>
+        <td id="customer-social"></td>
+        <td id="customer-social-val"></td>
+      </tr>
+    </table>
   </body>
   <script src="bundle.js"></script>
 </html>
