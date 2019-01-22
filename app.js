@@ -329,7 +329,6 @@ function initialize() {
     isAdmin();
   });
   addEventListeners();
-  getLogs();
 }
 
 function addEventListeners() {
@@ -347,6 +346,11 @@ function addEventListeners() {
     event.preventDefault();
     addUser();
   });
+
+  document.getElementById('delete-user').addEventListener('click', event => {
+    event.preventDefault();
+    deleteUser();
+  });
 }
 
 function addCustomer() {
@@ -354,19 +358,34 @@ function addCustomer() {
   const name = document.getElementById('name').value;
   const social = document.getElementById('social').value;
 
-  const dob = document.getElementById('dob').value;
+  var dob = document.getElementById('dob').value;
   dob = dob.split("-");
   dob = dob[1] + "/" + dob[2] + "/" + dob[0];
   dob = new Date(dob).getTime();
 
   const txn = customerContract.methods.createCustomer(id, name, dob, social);
   txn.send({from: web3.eth.defaultAccount})
+  // Display success message
 }
 
 function addUser() {
   const address = document.getElementById('user-address').value;
   const txn = customerContract.methods.addUser(address);
   txn.send({from: web3.eth.defaultAccount})
+    .then(response => {
+      console.log(response);
+    });
+  // Display success message
+}
+
+function deleteUser() {
+  const index = document.getElementById('user-index').value;
+  const txn = customerContract.methods.deleteIthUser(index);
+  txn.send({from: web3.eth.defaultAccount})
+    .then(response => {
+      console.log(response);
+    });
+  // Display success message
 }
 
 function getCustomer() {
@@ -386,11 +405,20 @@ function getCustomer() {
 }
 
 function getLogs() {
-  customerContract.getPastEvents('allEvents', response => {
-    if (response) {
-      document.getElementsByClassName('logs')[0].innerHTML = response;
-    }
-  });
+  customerContract.getPastEvents('allEvents')
+    .then(response => {
+      console.log(response);
+      if (response) {
+        for (log in response) {
+          console.log(log);
+
+          const logElement = document.createElement('li');
+          const text = document.createTextNode(log);
+          logElement.appendChild(text);
+          document.getElementsByClassName('logs')[0].appendChild(logElement);
+        }
+      }
+    });
 }
 
 function isUser() {
@@ -409,6 +437,7 @@ function isAdmin() {
     .then(response => {
       if (response) {
         document.getElementsByClassName('admin')[0].style.display = 'block';
+        getLogs();
       }
     });
 }
