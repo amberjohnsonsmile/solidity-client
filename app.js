@@ -2,8 +2,41 @@ const Web3 = require('web3');
 const web3 = new Web3(ethereum);
 ethereum.enable();
 
-const contractAddress = '0xff5c6bbd2e8d169f4e6cc3c090b470cfbefa4981';
+const contractAddress = '0x98ada3ae1316915105d004cb586826f8c69af001';
 const abi = [
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "count",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "type": "function",
+    "stateMutability": "view"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "users",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "type": "function",
+    "stateMutability": "view"
+  },
   {
     "constant": false,
     "inputs": [],
@@ -22,6 +55,126 @@ const abi = [
       }
     ],
     "name": "addUser",
+    "outputs": [],
+    "payable": false,
+    "type": "function",
+    "stateMutability": "nonpayable"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "user",
+        "type": "address"
+      }
+    ],
+    "name": "deleteUser",
+    "outputs": [],
+    "payable": false,
+    "type": "function",
+    "stateMutability": "nonpayable"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "candidate",
+        "type": "address"
+      },
+      {
+        "name": "method",
+        "type": "string"
+      }
+    ],
+    "name": "isUser",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "type": "function",
+    "stateMutability": "nonpayable"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "i",
+        "type": "uint256"
+      }
+    ],
+    "name": "getIthUser",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "type": "function",
+    "stateMutability": "view"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "index",
+        "type": "uint256"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      }
+    ],
+    "name": "updateCustomer",
+    "outputs": [],
+    "payable": false,
+    "type": "function",
+    "stateMutability": "nonpayable"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "type": "function",
+    "stateMutability": "view"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "isOwner",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "type": "function",
+    "stateMutability": "view"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "index",
+        "type": "uint256"
+      },
+      {
+        "name": "status",
+        "type": "uint256"
+      }
+    ],
+    "name": "updateCustomerStatus",
     "outputs": [],
     "payable": false,
     "type": "function",
@@ -54,109 +207,9 @@ const abi = [
     "stateMutability": "nonpayable"
   },
   {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "i",
-        "type": "uint256"
-      }
-    ],
-    "name": "deleteIthUser",
-    "outputs": [],
-    "payable": false,
-    "type": "function",
-    "stateMutability": "nonpayable"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "candidate",
-        "type": "address"
-      },
-      {
-        "name": "method",
-        "type": "string"
-      }
-    ],
-    "name": "isUser",
-    "outputs": [
-      {
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "type": "function",
-    "stateMutability": "nonpayable"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "index",
-        "type": "uint256"
-      },
-      {
-        "name": "name",
-        "type": "string"
-      }
-    ],
-    "name": "updateCustomer",
-    "outputs": [],
-    "payable": false,
-    "type": "function",
-    "stateMutability": "nonpayable"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "index",
-        "type": "uint256"
-      },
-      {
-        "name": "status",
-        "type": "uint256"
-      }
-    ],
-    "name": "updateCustomerStatus",
-    "outputs": [],
-    "payable": false,
-    "type": "function",
-    "stateMutability": "nonpayable"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "name": "by",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "name": "accessTime",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "name": "method",
-        "type": "string"
-      },
-      {
-        "indexed": false,
-        "name": "desc",
-        "type": "string"
-      }
-    ],
-    "name": "LogAccess",
-    "type": "event"
-  },
-  {
     "constant": true,
     "inputs": [],
-    "name": "count",
+    "name": "getUserCount",
     "outputs": [
       {
         "name": "",
@@ -238,84 +291,31 @@ const abi = [
     "stateMutability": "view"
   },
   {
-    "constant": true,
+    "anonymous": false,
     "inputs": [
       {
-        "name": "i",
-        "type": "uint256"
-      }
-    ],
-    "name": "getIthUser",
-    "outputs": [
-      {
-        "name": "",
+        "indexed": true,
+        "name": "by",
         "type": "address"
-      }
-    ],
-    "payable": false,
-    "type": "function",
-    "stateMutability": "view"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "getUserCount",
-    "outputs": [
+      },
       {
-        "name": "",
+        "indexed": true,
+        "name": "accessTime",
         "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "type": "function",
-    "stateMutability": "view"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "isOwner",
-    "outputs": [
+      },
       {
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "type": "function",
-    "stateMutability": "view"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "owner",
-    "outputs": [
+        "indexed": false,
+        "name": "method",
+        "type": "string"
+      },
       {
-        "name": "",
-        "type": "address"
+        "indexed": false,
+        "name": "desc",
+        "type": "string"
       }
     ],
-    "payable": false,
-    "type": "function",
-    "stateMutability": "view"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "users",
-    "outputs": [
-      {
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "payable": false,
-    "type": "function",
-    "stateMutability": "view"
+    "name": "LogAccess",
+    "type": "event"
   }
 ];
 
@@ -365,7 +365,10 @@ function addCustomer() {
 
   const txn = customerContract.methods.createCustomer(id, name, dob, social);
   txn.send({from: web3.eth.defaultAccount})
-  // Display success message
+    .then(response => {
+      if (response.status) alert('Customer created!')
+      else alert('Customer creation failed.')
+    });
 }
 
 function addUser() {
@@ -373,19 +376,19 @@ function addUser() {
   const txn = customerContract.methods.addUser(address);
   txn.send({from: web3.eth.defaultAccount})
     .then(response => {
-      console.log(response);
+      if (response.status) alert('User added!')
+      else alert('Failed to add user.')
     });
-  // Display success message
 }
 
 function deleteUser() {
-  const index = document.getElementById('user-index').value;
-  const txn = customerContract.methods.deleteIthUser(index);
+  const address = document.getElementById('user-index').value;
+  const txn = customerContract.methods.deleteUser(address);
   txn.send({from: web3.eth.defaultAccount})
     .then(response => {
-      console.log(response);
+      if (response.status) alert('User deleted!')
+      else alert('Failed to delete user.')
     });
-  // Display success message
 }
 
 function getCustomer() {
@@ -398,7 +401,7 @@ function getCustomer() {
     document.getElementById('customer-name').innerHTML = 'Name: '
     document.getElementById('customer-name-val').innerHTML = response.name
     document.getElementById('customer-dob').innerHTML = 'DOB: '
-    document.getElementById('customer-dob-val').innerHTML = new Date(parseInt(response.dateOfBirth.substring(0,10)))
+    document.getElementById('customer-dob-val').innerHTML = new Date(parseInt(response.dateOfBirth))
     document.getElementById('customer-social').innerHTML = 'SSN: '
     document.getElementById('customer-social-val').innerHTML = response.social
   });
@@ -406,17 +409,31 @@ function getCustomer() {
 
 function getLogs() {
   customerContract.getPastEvents('allEvents')
-    .then(response => {
-      console.log(response);
-      if (response) {
-        for (log in response) {
-          console.log(log);
+    .then(logs => {
+      if (logs.length > 0) {
+        logs.forEach(log => {
+          const headerElement = document.createElement('h3');
+          const headerText = document.createTextNode(`Log ${log['logIndex']}:`)
+          headerElement.appendChild(headerText);
 
-          const logElement = document.createElement('li');
-          const text = document.createTextNode(log);
-          logElement.appendChild(text);
+          const logElement = document.createElement('ul');
+          const keys = Object.keys(log);
+
+          keys.forEach(key => {
+            const listElement = document.createElement('li');
+            const text = document.createTextNode(`${key}: ${JSON.stringify(log[key])}`);
+            listElement.appendChild(text);
+            logElement.appendChild(listElement);
+          });
+
+          document.getElementsByClassName('logs')[0].appendChild(headerElement);
           document.getElementsByClassName('logs')[0].appendChild(logElement);
-        }
+        });
+      } else {
+        const pElement = document.createElement('p');
+        const text = document.createTextNode('No logs to display.');
+        pElement.appendChild(text);
+        document.getElementsByClassName('logs')[0].appendChild(pElement);
       }
     });
 }
