@@ -367,6 +367,7 @@ function addCustomer() {
   const txn = customerContract.methods.createCustomer(id, name, dob, social);
   txn.send({from: web3.eth.defaultAccount})
     .then(response => {
+      document.getElementsByClassName('customer')[0].reset();
       if (response.status) alert('Customer created!')
       else alert('Customer creation failed.')
     });
@@ -377,6 +378,7 @@ function addUser() {
   const txn = customerContract.methods.addUser(address);
   txn.send({from: web3.eth.defaultAccount})
     .then(response => {
+      document.getElementsByClassName('add-user')[0].reset();
       if (response.status) alert('User added!')
       else alert('Failed to add user.')
     });
@@ -387,6 +389,7 @@ function deleteUser() {
   const txn = customerContract.methods.deleteUser(address);
   txn.send({from: web3.eth.defaultAccount})
     .then(response => {
+      document.getElementsByClassName('delete-user')[0].reset();
       if (response.status) alert('User deleted!')
       else alert('Failed to delete user.')
     });
@@ -397,6 +400,8 @@ function getCustomer() {
   const txn = customerContract.methods.getCustomerById(id);
 
   txn.call().then(response => {
+    document.getElementsByClassName('get-customer')[0].reset();
+
     document.getElementById('customer-id').innerHTML = 'ID: '
     document.getElementById('customer-id-val').innerHTML = response.idRet
     document.getElementById('customer-name').innerHTML = 'Name: '
