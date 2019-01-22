@@ -1,90 +1,9 @@
-var Web3 = require('web3');
-var web3 = new Web3(ethereum);
-
-var customerContract = new web3.eth.Contract(abi, contractAddress);
+const Web3 = require('web3');
+const web3 = new Web3(ethereum);
 ethereum.enable();
-initialize();
 
-function initialize() {
-  web3.eth.getAccounts().then(response => {
-    web3.eth.defaultAccount = response[0];
-    isUser();
-    isAdmin();
-    addEventListeners();
-    populateLogs();
-  });
-}
-
-function addEventListeners() {
-  document.getElementById('registration').addEventListener('click', event => {
-    event.preventDefault();
-    createCustomer();
-  });
-
-  document.getElementById('getById').addEventListener('click', event => {
-    event.preventDefault();
-    getCustomer();
-  });
-}
-
-function createCustomer() {
-  var id = document.getElementById('id').value;
-  var name = document.getElementById('name').value;
-  var social = document.getElementById('social').value;
-
-  var dob = document.getElementById('dob').value;
-  dob = dob.split("-");
-  dob = dob[1] + "/" + dob[2] + "/" + dob[0];
-  dob = new Date(dob).getTime();
-
-  var txn = customerContract.methods.createCustomer(id, name, dob, social);
-  txn.send({from: web3.eth.defaultAccount})
-}
-
-function getCustomer() {
-  var id = document.getElementById('customerId').value;
-  var txn = customerContract.methods.getCustomerById(id);
-
-  txn.call().then(response => {
-    document.getElementById('customer-id').innerHTML = 'ID: '
-    document.getElementById('customer-id-val').innerHTML = response.idRet
-    document.getElementById('customer-name').innerHTML = 'Name: '
-    document.getElementById('customer-name-val').innerHTML = response.name
-    document.getElementById('customer-dob').innerHTML = 'DOB: '
-    document.getElementById('customer-dob-val').innerHTML = new Date(parseInt(response.dateOfBirth.substring(0,10)))
-    document.getElementById('customer-social').innerHTML = 'SSN: '
-    document.getElementById('customer-social-val').innerHTML = response.social
-  });
-}
-
-function populateLogs() {
-  customerContract.getPastEvents('allEvents', response => {
-    document.getElementsByClassName('logs')[0].innerHTML = response;
-  });
-}
-
-function isUser() {
-  customerContract.methods.isUser(web3.eth.defaultAccount, 'genAccess')
-    .call({from: web3.eth.defaultAccount})
-    .then(response => {
-      if (response) {
-        document.getElementsByClassName('user')[0].style.display = 'block';
-      }
-    });
-}
-
-function isAdmin() {
-  customerContract.methods.isOwner()
-    .call({from: web3.eth.defaultAccount})
-    .then(response => {
-      if (response) {
-        document.getElementsByClassName('admin')[0].style.display = 'block';
-      }
-    });
-}
-
-var contractAddress = '0xff5c6bbd2e8d169f4e6cc3c090b470cfbefa4981';
-var abi = [
+const contractAddress = '0xff5c6bbd2e8d169f4e6cc3c090b470cfbefa4981';
+const abi = [
   {
     "constant": false,
     "inputs": [],
@@ -399,3 +318,97 @@ var abi = [
     "stateMutability": "view"
   }
 ];
+
+const customerContract = new web3.eth.Contract(abi, contractAddress);
+initialize();
+
+function initialize() {
+  web3.eth.getAccounts().then(response => {
+    web3.eth.defaultAccount = response[0];
+    isUser();
+    isAdmin();
+  });
+  addEventListeners();
+  getLogs();
+}
+
+function addEventListeners() {
+  document.getElementById('registration').addEventListener('click', event => {
+    event.preventDefault();
+    addCustomer();
+  });
+
+  document.getElementById('getById').addEventListener('click', event => {
+    event.preventDefault();
+    getCustomer();
+  });
+
+  document.getElementById('add-user').addEventListener('click', event => {
+    event.preventDefault();
+    addUser();
+  });
+}
+
+function addCustomer() {
+  const id = document.getElementById('id').value;
+  const name = document.getElementById('name').value;
+  const social = document.getElementById('social').value;
+
+  const dob = document.getElementById('dob').value;
+  dob = dob.split("-");
+  dob = dob[1] + "/" + dob[2] + "/" + dob[0];
+  dob = new Date(dob).getTime();
+
+  const txn = customerContract.methods.createCustomer(id, name, dob, social);
+  txn.send({from: web3.eth.defaultAccount})
+}
+
+function addUser() {
+  const address = document.getElementById('user-address').value;
+  const txn = customerContract.methods.addUser(address);
+  txn.send({from: web3.eth.defaultAccount})
+}
+
+function getCustomer() {
+  const id = document.getElementById('customerId').value;
+  const txn = customerContract.methods.getCustomerById(id);
+
+  txn.call().then(response => {
+    document.getElementById('customer-id').innerHTML = 'ID: '
+    document.getElementById('customer-id-val').innerHTML = response.idRet
+    document.getElementById('customer-name').innerHTML = 'Name: '
+    document.getElementById('customer-name-val').innerHTML = response.name
+    document.getElementById('customer-dob').innerHTML = 'DOB: '
+    document.getElementById('customer-dob-val').innerHTML = new Date(parseInt(response.dateOfBirth.substring(0,10)))
+    document.getElementById('customer-social').innerHTML = 'SSN: '
+    document.getElementById('customer-social-val').innerHTML = response.social
+  });
+}
+
+function getLogs() {
+  customerContract.getPastEvents('allEvents', response => {
+    if (response) {
+      document.getElementsByClassName('logs')[0].innerHTML = response;
+    }
+  });
+}
+
+function isUser() {
+  customerContract.methods.isUser(web3.eth.defaultAccount, 'genAccess')
+    .call({from: web3.eth.defaultAccount})
+    .then(response => {
+      if (response) {
+        document.getElementsByClassName('user')[0].style.display = 'block';
+      }
+    });
+}
+
+function isAdmin() {
+  customerContract.methods.isOwner()
+    .call({from: web3.eth.defaultAccount})
+    .then(response => {
+      if (response) {
+        document.getElementsByClassName('admin')[0].style.display = 'block';
+      }
+    });
+}

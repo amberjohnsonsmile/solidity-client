@@ -1,15 +1,10 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
-var Web3 = require('web3');
-var web3 = new Web3(ethereum);
+const Web3 = require('web3');
+const web3 = new Web3(ethereum);
 ethereum.enable();
-web3.eth.getAccounts().then(response => {
-  web3.eth.defaultAccount = response[0];
-  isUser();
-  isAdmin();
-});
 
-var contractAddress = '0xff5c6bbd2e8d169f4e6cc3c090b470cfbefa4981';
-var abi = [
+const contractAddress = '0xff5c6bbd2e8d169f4e6cc3c090b470cfbefa4981';
+const abi = [
   {
     "constant": false,
     "inputs": [],
@@ -325,25 +320,59 @@ var abi = [
   }
 ];
 
-var customerContract = new web3.eth.Contract(abi, contractAddress);
+const customerContract = new web3.eth.Contract(abi, contractAddress);
+initialize();
 
-function register() {
-  var id = document.getElementById('id').value;
-  var name = document.getElementById('name').value;
-  var social = document.getElementById('social').value;
+function initialize() {
+  web3.eth.getAccounts().then(response => {
+    web3.eth.defaultAccount = response[0];
+    isUser();
+    isAdmin();
+  });
+  addEventListeners();
+  getLogs();
+}
 
-  var dob = document.getElementById('dob').value;
+function addEventListeners() {
+  document.getElementById('registration').addEventListener('click', event => {
+    event.preventDefault();
+    addCustomer();
+  });
+
+  document.getElementById('getById').addEventListener('click', event => {
+    event.preventDefault();
+    getCustomer();
+  });
+
+  document.getElementById('add-user').addEventListener('click', event => {
+    event.preventDefault();
+    addUser();
+  });
+}
+
+function addCustomer() {
+  const id = document.getElementById('id').value;
+  const name = document.getElementById('name').value;
+  const social = document.getElementById('social').value;
+
+  const dob = document.getElementById('dob').value;
   dob = dob.split("-");
   dob = dob[1] + "/" + dob[2] + "/" + dob[0];
   dob = new Date(dob).getTime();
 
-  var txn = customerContract.methods.createCustomer(id, name, dob, social);
+  const txn = customerContract.methods.createCustomer(id, name, dob, social);
+  txn.send({from: web3.eth.defaultAccount})
+}
+
+function addUser() {
+  const address = document.getElementById('user-address').value;
+  const txn = customerContract.methods.addUser(address);
   txn.send({from: web3.eth.defaultAccount})
 }
 
 function getCustomer() {
-  var id = document.getElementById('customerId').value;
-  var txn = customerContract.methods.getCustomerById(id);
+  const id = document.getElementById('customerId').value;
+  const txn = customerContract.methods.getCustomerById(id);
 
   txn.call().then(response => {
     document.getElementById('customer-id').innerHTML = 'ID: '
@@ -357,19 +386,13 @@ function getCustomer() {
   });
 }
 
-document.getElementById('registration').addEventListener('click', event => {
-  event.preventDefault();
-  register();
-});
-
-document.getElementById('getById').addEventListener('click', event => {
-  event.preventDefault();
-  getCustomer();
-});
-
-customerContract.getPastEvents('allEvents', response => {
-  document.getElementsByClassName('logs')[0].innerHTML = response;
-});
+function getLogs() {
+  customerContract.getPastEvents('allEvents', response => {
+    if (response) {
+      document.getElementsByClassName('logs')[0].innerHTML = response;
+    }
+  });
+}
 
 function isUser() {
   customerContract.methods.isUser(web3.eth.defaultAccount, 'genAccess')
