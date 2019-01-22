@@ -3,10 +3,13 @@ var Web3 = require('web3');
 var web3 = new Web3(ethereum);
 ethereum.enable();
 web3.eth.getAccounts().then(response => {
-  web3.eth.defaultAccount = response[0] 
-})
+  web3.eth.defaultAccount = response[0];
+  isUser();
+  isAdmin();
+});
 
-var customerContract = new web3.eth.Contract([
+var contractAddress = '0xff5c6bbd2e8d169f4e6cc3c090b470cfbefa4981';
+var abi = [
   {
     "constant": false,
     "inputs": [],
@@ -276,6 +279,20 @@ var customerContract = new web3.eth.Contract([
   {
     "constant": true,
     "inputs": [],
+    "name": "isOwner",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "type": "function",
+    "stateMutability": "view"
+  },
+  {
+    "constant": true,
+    "inputs": [],
     "name": "owner",
     "outputs": [
       {
@@ -306,7 +323,9 @@ var customerContract = new web3.eth.Contract([
     "type": "function",
     "stateMutability": "view"
   }
-], '0xeef98fae25037b7790e6d407f0d28dc3347a08fa');
+];
+
+var customerContract = new web3.eth.Contract(abi, contractAddress);
 
 function register() {
   var id = document.getElementById('id').value;
@@ -349,22 +368,28 @@ document.getElementById('getById').addEventListener('click', event => {
 });
 
 customerContract.getPastEvents('allEvents', response => {
-  console.log(response);
   document.getElementsByClassName('logs')[0].innerHTML = response;
 });
 
-function isAdmin() {
-  customerContract.methods.isAdmin(web3.eth.defaultAccount)
-    .call()
+function isUser() {
+  customerContract.methods.isUser(web3.eth.defaultAccount, 'genAccess')
+    .call({from: web3.eth.defaultAccount})
     .then(response => {
-      console.log(response)
-    })
-  // if (true) {
-  //   document.getElementsByClassName('admin')[0].display = "inline-block";
-  // }
+      if (response) {
+        document.getElementsByClassName('user')[0].style.display = 'block';
+      }
+    });
 }
 
-isAdmin();
+function isAdmin() {
+  customerContract.methods.isOwner()
+    .call({from: web3.eth.defaultAccount})
+    .then(response => {
+      if (response) {
+        document.getElementsByClassName('admin')[0].style.display = 'block';
+      }
+    });
+}
 
 },{"web3":226}],2:[function(require,module,exports){
 module.exports = require('./register')().Promise

@@ -4,29 +4,13 @@
   </head>
   <body>
     <div class="main">
-      <h1>Data Contract Registry</h1>
-      <h2>Create Customer</h2>
-      <form>
-        <label>Customer ID
-          <input type="number" name="id" id="id" />
-        </label>
-        <label>Customer Name
-          <input type="text" name="name" id="name" />
-        </label>
-        <label>Customer Date Of Birth
-          <input type="date" name="dob" id="dob" />
-        </label>
-        <label>Customer Social Security Number
-          <input type="number" name="social" id="social" />
-        </label>
-        <input type="button" id="registration" value="Register" />
-      </form>
+      <h1>Customer Registry</h1>
       <h2 id="get-header">Get Customer By ID</h2>
       <form>
         <label>Customer Id
           <input type="number" id="customerId">
         </label>
-        <input type="button" id="getById" value="Get Customer" />
+        <input type="button" class="upper" id="getById" value="Get Customer" />
       </form>
       <table>
         <tr>
@@ -46,9 +30,41 @@
           <td id="customer-social-val"></td>
         </tr>
       </table>
+      <div class="user">
+        <h2>Create Customer</h2>
+        <form>
+          <label>Customer ID
+            <input type="number" name="id" id="id" />
+          </label>
+          <label>Customer Name
+            <input type="text" name="name" id="name" />
+          </label>
+          <label>Customer Date Of Birth
+            <input type="date" name="dob" id="dob" />
+          </label>
+          <label>Customer Social Security Number
+            <input type="number" name="social" id="social" />
+          </label>
+          <input type="button" class="upper" id="registration" value="Register" />
+        </form>
+      </div>
       <div class="admin">
-        <h2>Admin Tools</h2>
-        <h3>Event Logs</h3>
+        <h1>Admin Tools</h1>
+        <h2>Add New User</h2>
+        <form>
+          <label>User Address
+            <input type="text" name="user-address" id="user-address" />
+          </label>
+          <input type="button" class="upper" id="add-user" value="Add User" />
+        </form>
+        <h2>Delete User</h2>
+        <form>
+          <label>User Index
+            <input type="text" name="user-index" id="user-index" />
+          </label>
+          <input type="button" class="upper" id="delete-user" value="Delete User" />
+        </form>
+        <h2>Event Logs</h2>
         <p class="logs"></p>
       </div>
     </div>

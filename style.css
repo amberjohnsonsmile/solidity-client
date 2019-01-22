@@ -21,7 +21,7 @@ h1 {
 
 h2 {
   font-size: 24;
-  text-align: center;
+  margin-top: 70;
 }
 
 #get-header {
@@ -35,7 +35,7 @@ input {
   margin-bottom: 10;
 }
 
-#registration, #getById {
+.upper {
   text-transform: uppercase;
 }
 
@@ -48,6 +48,6 @@ td {
   vertical-align: top;
 }
 
-.admin {
-  display: hidden;
+.admin, .user {
+  display: none;
 }
