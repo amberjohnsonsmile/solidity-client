@@ -2,6 +2,8 @@
 
 This smart contract app connects to a locally deployed Ethereum smart contract. The contract manages a list of customers. Only users with permission, identified by address, may create a customer. Only the "owner" address can edit the list of permissioned users.
 
+![screenshot](https://user-images.githubusercontent.com/31632938/51629364-a3cd9400-1f04-11e9-9cc0-f39605ae0e6b.png)
+
 ## How to Run Locally
 
 1. Install browserify and ganache-cli by running `npm install -g browserify ganache-cli`.
