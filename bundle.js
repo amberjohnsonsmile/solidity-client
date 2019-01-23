@@ -3,7 +3,7 @@ const Web3 = require('web3');
 const web3 = new Web3(ethereum);
 ethereum.enable();
 
-const contractAddress = '0xe09bf8b47a359034c8638599cadf5fc38b4f8f8b';
+const contractAddress = '0xac6ea9e0c3213fbbec9c75407471f36e998ee8c6';
 const abi = [
   {
     "constant": false,
