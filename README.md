@@ -4,6 +4,15 @@ This smart contract app connects to a locally deployed Ethereum smart contract. 
 
 ![screenshot](https://user-images.githubusercontent.com/31632938/51629364-a3cd9400-1f04-11e9-9cc0-f39605ae0e6b.png)
 
+## Technologies
+* Ethereum
+* HTML/CSS
+* JavaScript
+* Solidity
+* Ganache
+* Remix
+* MetaMask
+
 ## How to Run Locally
 
 1. Install browserify and ganache-cli by running `npm install -g browserify ganache-cli`.
@@ -17,3 +26,16 @@ This smart contract app connects to a locally deployed Ethereum smart contract. 
 1. Run `browserify app.js -o bundle.js`.
 1. Run `http-server` to start the app.
 1. Visit the app from the Chrome browser. When MetaMask asks for permission, click "Connect". You can now create a customer, access an existing customer, and add other addresses to the list of users who can create customers. Try selecting another account from MetaMask and refreshing the page! Only certain features will be available based on the current address.
+
+## Contact
+
+Amber Johnson, Software Developer
+
+![headshot](https://user-images.githubusercontent.com/31632938/36687590-517de15e-1ae7-11e8-8753-5c28cefd5e69.jpeg)
+* Email amberjohnsonsmile@gmail.com
+* GitHub [@amberjohnsonsmile](https://github.com/amberjohnsonsmile)
+* LinkedIn [@amberjohnsonsmile](https://linkedin.com/in/amberjohnsonsmile)
+
+## License
+
+MIT
