@@ -3,41 +3,8 @@ const Web3 = require('web3');
 const web3 = new Web3(ethereum);
 ethereum.enable();
 
-const contractAddress = '0x98ada3ae1316915105d004cb586826f8c69af001';
+const contractAddress = '0xe09bf8b47a359034c8638599cadf5fc38b4f8f8b';
 const abi = [
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "count",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "type": "function",
-    "stateMutability": "view"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "users",
-    "outputs": [
-      {
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "payable": false,
-    "type": "function",
-    "stateMutability": "view"
-  },
   {
     "constant": false,
     "inputs": [],
@@ -56,6 +23,32 @@ const abi = [
       }
     ],
     "name": "addUser",
+    "outputs": [],
+    "payable": false,
+    "type": "function",
+    "stateMutability": "nonpayable"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "dateOfBirth",
+        "type": "uint256"
+      },
+      {
+        "name": "social",
+        "type": "uint256"
+      }
+    ],
+    "name": "createCustomer",
     "outputs": [],
     "payable": false,
     "type": "function",
@@ -99,25 +92,6 @@ const abi = [
     "stateMutability": "nonpayable"
   },
   {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "i",
-        "type": "uint256"
-      }
-    ],
-    "name": "getIthUser",
-    "outputs": [
-      {
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "payable": false,
-    "type": "function",
-    "stateMutability": "view"
-  },
-  {
     "constant": false,
     "inputs": [
       {
@@ -134,34 +108,6 @@ const abi = [
     "payable": false,
     "type": "function",
     "stateMutability": "nonpayable"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "owner",
-    "outputs": [
-      {
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "payable": false,
-    "type": "function",
-    "stateMutability": "view"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "isOwner",
-    "outputs": [
-      {
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "type": "function",
-    "stateMutability": "view"
   },
   {
     "constant": false,
@@ -182,35 +128,36 @@ const abi = [
     "stateMutability": "nonpayable"
   },
   {
-    "constant": false,
+    "anonymous": false,
     "inputs": [
       {
-        "name": "id",
+        "indexed": true,
+        "name": "by",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "name": "accessTime",
         "type": "uint256"
       },
       {
-        "name": "name",
+        "indexed": false,
+        "name": "method",
         "type": "string"
       },
       {
-        "name": "dateOfBirth",
-        "type": "uint256"
-      },
-      {
-        "name": "social",
-        "type": "uint256"
+        "indexed": false,
+        "name": "desc",
+        "type": "string"
       }
     ],
-    "name": "createCustomer",
-    "outputs": [],
-    "payable": false,
-    "type": "function",
-    "stateMutability": "nonpayable"
+    "name": "LogAccess",
+    "type": "event"
   },
   {
     "constant": true,
     "inputs": [],
-    "name": "getUserCount",
+    "name": "count",
     "outputs": [
       {
         "name": "",
@@ -292,31 +239,84 @@ const abi = [
     "stateMutability": "view"
   },
   {
-    "anonymous": false,
+    "constant": true,
     "inputs": [
       {
-        "indexed": true,
-        "name": "by",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "name": "accessTime",
+        "name": "i",
         "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "name": "method",
-        "type": "string"
-      },
-      {
-        "indexed": false,
-        "name": "desc",
-        "type": "string"
       }
     ],
-    "name": "LogAccess",
-    "type": "event"
+    "name": "getIthUser",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "type": "function",
+    "stateMutability": "view"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getUserCount",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "type": "function",
+    "stateMutability": "view"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "isOwner",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "type": "function",
+    "stateMutability": "view"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "type": "function",
+    "stateMutability": "view"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "users",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "type": "function",
+    "stateMutability": "view"
   }
 ];
 
@@ -402,38 +402,57 @@ function getCustomer() {
   txn.call().then(response => {
     document.getElementsByClassName('get-customer')[0].reset();
 
-    document.getElementById('customer-id').innerHTML = 'ID: '
+    document.getElementById('customer-id').innerHTML = 'ID:'
     document.getElementById('customer-id-val').innerHTML = response.idRet
-    document.getElementById('customer-name').innerHTML = 'Name: '
+    document.getElementById('customer-name').innerHTML = 'NAME:'
     document.getElementById('customer-name-val').innerHTML = response.name
-    document.getElementById('customer-dob').innerHTML = 'DOB: '
+    document.getElementById('customer-dob').innerHTML = 'DOB:'
     document.getElementById('customer-dob-val').innerHTML = new Date(parseInt(response.dateOfBirth))
-    document.getElementById('customer-social').innerHTML = 'SSN: '
+    document.getElementById('customer-social').innerHTML = 'SSN:'
     document.getElementById('customer-social-val').innerHTML = response.social
   });
 }
 
 function getLogs() {
-  customerContract.getPastEvents('allEvents')
+  customerContract.getPastEvents('allEvents', {
+    fromBlock: 0,
+    toBlock: 'latest'
+  })
     .then(logs => {
+
+      console.log(logs)
+
       if (logs.length > 0) {
         logs.forEach(log => {
-          const headerElement = document.createElement('h3');
-          const headerText = document.createTextNode(`Log ${log['logIndex']}:`)
-          headerElement.appendChild(headerText);
+          const values = log.returnValues;
 
-          const logElement = document.createElement('ul');
-          const keys = Object.keys(log);
+          const keys = Object.keys(values);
+
+          const headerElement = document.createElement('h3');
+          const headerText = document.createTextNode(`Log ${logs.indexOf(log)}:`)
+          headerElement.appendChild(headerText);
+          document.getElementsByClassName('logs')[0].appendChild(headerElement);
+
+          const table = document.createElement('table');
 
           keys.forEach(key => {
-            const listElement = document.createElement('li');
-            const text = document.createTextNode(`${key}: ${JSON.stringify(log[key])}`);
-            listElement.appendChild(text);
-            logElement.appendChild(listElement);
-          });
+            if (key.length > 1) {
+              const tr = document.createElement('tr');
 
-          document.getElementsByClassName('logs')[0].appendChild(headerElement);
-          document.getElementsByClassName('logs')[0].appendChild(logElement);
+              const tdKey = document.createElement('td');
+              const tdKeyText = document.createTextNode(`${key.toUpperCase()}:`);
+              tdKey.appendChild(tdKeyText)
+
+              const tdValue = document.createElement('td');
+              const tdValueText = document.createTextNode(key != 'accessTime' ? values[key] : Date(parseInt(values[key])));
+              tdValue.appendChild(tdValueText)
+
+              tr.appendChild(tdKey);
+              tr.appendChild(tdValue);
+              table.appendChild(tr);
+            }
+          });
+          document.getElementsByClassName('logs')[0].appendChild(table);
         });
       } else {
         const pElement = document.createElement('p');
