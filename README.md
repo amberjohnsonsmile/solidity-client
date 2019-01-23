@@ -1,6 +1,6 @@
 # Smart Contract Client
 
-This smart contract app connects to a locally deployed Ethereum smart contract. The contract manages a list of customers. Only users with permission, identified by address, may create a customer. Only the "owner" address can edit the list of permissioned users.
+This smart contract app connects to a locally deployed Ethereum smart contract. The contract manages a list of customers. Only users with permission, identified by address, may create a customer. Only the "owner" address can edit the list of permissioned users. The app is loosely based on [this](https://blockgeeks.com/introduction-to-solidity-acl-and-events-part-2/) tutorial, props to Komhar Consulting.
 
 ![screenshot](https://user-images.githubusercontent.com/31632938/51629364-a3cd9400-1f04-11e9-9cc0-f39605ae0e6b.png)
 
