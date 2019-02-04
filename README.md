@@ -1,4 +1,4 @@
-# Smart Contract Client
+# Solidity Client
 
 This smart contract app connects to a locally deployed Ethereum smart contract. The contract manages a list of customers. Only users with permission, identified by address, may create a customer. Only the "owner" address can edit the list of permissioned users. The app is loosely based on [this](https://blockgeeks.com/introduction-to-solidity-acl-and-events-part-2/) tutorial, props to Komhar Consulting.
 
